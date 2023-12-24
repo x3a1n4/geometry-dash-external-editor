@@ -2,6 +2,7 @@
 //
 
 #include "UI/ui.h"
+#include "UI/UIManager.h"
 //#include "UI/CustomImGui.h"
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
