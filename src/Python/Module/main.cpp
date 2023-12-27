@@ -1,10 +1,9 @@
-#include "python.h"
-
-#include <python3.11/Python.h>
-
 static int numargs = 0;
 
 /* Return the number of arguments of the application command line */
+
+#include <python3.11/Python.h>
+
 static PyObject*
 emb_numargs(PyObject* self, PyObject* args)
 {
