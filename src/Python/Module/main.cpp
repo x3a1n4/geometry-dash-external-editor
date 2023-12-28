@@ -1,30 +1,34 @@
 static int numargs = 0;
 
-/* Return the number of arguments of the application command line */
-
 #include <python3.11/Python.h>
 
-static PyObject*
-emb_numargs(PyObject* self, PyObject* args)
-{
-    if (!PyArg_ParseTuple(args, ":numargs"))
-        return NULL;
-    return PyLong_FromLong(numargs);
-}
+class GdeeModule {
+// Implement python module
+// from https://docs.python.org/3/extending/embedding.html
+public:
+    static PyObject* PyInit_GDEE(void) {
+        return PyModule_Create(&EmbModule);
+    }
 
-static PyMethodDef EmbMethods[] = {
-    {"numargs", emb_numargs, METH_VARARGS,
+private:
+    // Define the moule
+    static PyModuleDef GdeeModule = {
+    PyModuleDef_HEAD_INIT, "gdee", NULL, -1, GdeeMethods,
+    NULL, NULL, NULL, NULL
+    };
+
+    // Define methods available here!
+    // TODO: a ton. This will needd to be separated quite a bit, since we'll probably provide hundreds of methods here
+    static PyMethodDef GdeeMethods[] = {
+    {"test", test_function, METH_VARARGS,
      "Return the number of arguments received by the process."},
     {NULL, NULL, 0, NULL}
-};
+    };
 
-static PyModuleDef EmbModule = {
-    PyModuleDef_HEAD_INIT, "emb", NULL, -1, EmbMethods,
-    NULL, NULL, NULL, NULL
+    // Define a test function
+    // This will be expanded later
+    static PyObject* test_function(PyObject* self, PyObject* args)
+    {
+        return PyUnicode_FromString("Hello World!");
+    }
 };
-
-static PyObject*
-PyInit_emb(void)
-{
-    return PyModule_Create(&EmbModule);
-}

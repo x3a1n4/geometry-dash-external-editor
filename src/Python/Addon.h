@@ -1,0 +1,18 @@
+#pragma once
+
+#include <python3.11/Python.h>
+#include <string>
+
+// Generic addon class
+class Addon {
+public:
+	Addon(std::string path);
+	std::string addonPath;
+
+	void registerAddon();
+	void unregisterAddon();
+
+private:
+	PyObject* registerPFunc;
+	PyObject* unregisterPFunc;
+};

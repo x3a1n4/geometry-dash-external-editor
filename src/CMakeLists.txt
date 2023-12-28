@@ -9,7 +9,7 @@ add_executable (gdee
 	"main.cpp" 
 	"UI/ui.cpp" "UI/ui.h" "UI/CustomImGui.cpp" "UI/CustomImGui.h" 
 	"Python/AddonManager.cpp" "Python/AddonManager.h"
-	"UI/UIManager.cpp" "UI/UIManager.h")
+	"UI/UIManager.cpp" "UI/UIManager.h" "Python/Addon.cpp" "Python/Addon.h")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET gdee PROPERTY CXX_STANDARD 20)
