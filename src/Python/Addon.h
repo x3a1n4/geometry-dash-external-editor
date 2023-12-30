@@ -13,6 +13,10 @@ public:
 	void unregisterAddon();
 
 private:
+	void callAddonFunc(PyObject* pFunc);
+
+	PyObject* pModule;
+
 	PyObject* registerPFunc;
 	PyObject* unregisterPFunc;
 };
