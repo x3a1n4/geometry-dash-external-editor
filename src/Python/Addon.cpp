@@ -1,14 +1,12 @@
 #include "Addon.h"
 
-#include <python3.11/Python.h>
-
 // Generic addon class
 
 // load addon from path to main.py file
-Addon::Addon(std::string path) {
+Addon::Addon(std::string_view path) {
 	addonPath = path; // save path
 
-	PyObject* pName = PyUnicode_DecodeFSDefault(path.c_str());
+	PyObject* pName = PyUnicode_DecodeFSDefault(path.data());
 
 	pModule = PyImport_Import(pName); // load the module
 	Py_DECREF(pName);
@@ -22,7 +20,6 @@ Addon::Addon(std::string path) {
 
 void Addon::registerAddon() {
 	callAddonFunc(registerPFunc);
-
 }
 
 void Addon::unregisterAddon() {

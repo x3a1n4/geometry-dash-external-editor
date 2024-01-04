@@ -9,6 +9,9 @@
 
 using namespace std;
 
+// TODO: place everything in a namespace (eventually)
+// https://www.learncpp.com/cpp-tutorial/user-defined-namespaces-and-the-scope-resolution-operator/
+
 class CustomImGui : public UseImGui {
 public:
 	virtual void Update() override {

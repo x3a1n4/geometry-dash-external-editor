@@ -1,32 +1,31 @@
 #include "AddonManager.h"
 
 #include "Addon.h"
+// TODO: including headers as directories like this is bad practice (https://www.learncpp.com/cpp-tutorial/header-files/), figure out ...eventually
+#include "Module/gdee.h"
 
 #include <python3.11/Python.h>
 
 #include <string>
+#include <string_view>
 #include <filesystem>
 
 namespace fs = std::filesystem;
 
+#define PY_SSIZE_T_CLEAN
+
 class AddonManager {
 public:
-    // A couple thoughts:
-    // Well, blender has you make a class that extends, say, bpy.types.Operator,
-    // And you register that operator class with bpy.utils.register_class()
-    // 
-    // So this is going to be bulky. I'll try to set it up for now, but I think it will be beneficial
-    // If register and unregister are the ONLY two functions
-    // 
-    // And otherwise, you register, say, windows and objects by making classes that extend gdee.genericUI or whatever.
-    // 
     // TODO: get proper  path
-	const std::string addonsPath = "Addons"; 
+	const std::string_view addonsPath = "Addons"; 
 
     // Load addons, do this on startup!
-	int loadAllAddons(std::string addonsParentPath) {
-		// get all files
-		Py_Initialize(); // Initialize
+    // TODO: strings shouldn't be passed by value (https://www.learncpp.com/cpp-tutorial/introduction-to-stdstring/)
+    // Use std::string_view
+	int loadAllAddons(std::string_view addonsParentPath) {
+        // Initialize
+        PyImport_AppendInittab("gdee", &GdeeModule::PyInit_GDEE); // Append gdee module
+		Py_Initialize();
 
         // Loop through all folders, find main.py file in each
         // TODO: simply run all files named "main.py". This can be changed later
