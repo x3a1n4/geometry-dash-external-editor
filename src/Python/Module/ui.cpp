@@ -46,7 +46,7 @@ static PyObject* UI_New(PyTypeObject* type, PyObject* args, PyObject* kwds) {
 }
 
 // Init method
-static int Custom_init(UI_Object* self, PyObject* args, PyObject* kwds){
+static int UI_Init(UI_Object* self, PyObject* args, PyObject* kwds){
     static char* kwlist[] = {(char*)"number_for_testing_purposes", NULL};
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "|OOi", kwlist,
@@ -62,6 +62,34 @@ static PyMemberDef UI_members[] = {
     {NULL}  /* Sentinel */
 };
 
+// define methods
+// these methods should ultimately get defined in the python code itself
+static PyObject* UI_preRender(UI_Object* self, PyObject* Py_UNUSED(ignored)) {
+
+}
+
+static PyObject* UI_render(UI_Object* self, PyObject* Py_UNUSED(ignored)) {
+
+}
+
+static PyObject* UI_postRender(UI_Object* self, PyObject* Py_UNUSED(ignored)) {
+
+}
+
+// Get methods
+static PyMethodDef UI_methods[] = {
+    {"preRender", (PyCFunction)UI_preRender, METH_NOARGS,
+     "Perform any operations before rendering"
+    },
+    {"render", (PyCFunction)UI_render, METH_NOARGS, // Note: may need args here
+     "Render elements to the screen"
+    },
+    {"postRender", (PyCFunction)UI_postRender, METH_NOARGS,
+     "Perform any operations after rendering"
+    },
+    {NULL}  /* Sentinel */
+};
+
 
 // Define the type object, using the definitions above
 static PyTypeObject UI_PType = {
@@ -69,10 +97,34 @@ static PyTypeObject UI_PType = {
     .tp_name = "gdee.ui.UI", // The name of the type (TODO: manage later)
     .tp_basicsize = sizeof(UI_Object),
     .tp_itemsize = 0, // Size is so that python knows how much space to allocate. Itemsize is for variable-sized objects
-    .tp_flags = Py_TPFLAGS_DEFAULT, // Manditory flags
+    .tp_dealloc = (destructor)UI_Dealloc,
+    .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE, // Default flag is manditory, basetype flag means ???
     .tp_doc = PyDoc_STR("UI objects"), // Docstring
+    .tp_methods = UI_methods,
+    .tp_members = UI_members,
+    .tp_init = (initproc)UI_Init,
     .tp_new = PyType_GenericNew, // equivelant of __new__(), may change later
 };
+#pragma endregion
+
+#pragma region UI Functions
+static PyObject* registerUIElement(PyObject* self, PyObject* args) {
+    // TODO: manage this
+}
+
+static PyObject* unregisterUIElement(PyObject* self, PyObject* args) {
+    // TODO: manage this
+}
+
+static PyMethodDef methods[] = {
+    {"register", registerUIElement, METH_VARARGS,
+     "Register a Dear Imgui frame with the UI manager"},
+    {"unregister", registerUIElement, METH_VARARGS,
+     "Unregister a Dear Imgui frame with the UI manager"},
+    {NULL, NULL, 0, NULL}
+};
+#pragma endregion
+
 
 // Define module (this will be done in gdee.cpp)
 static PyModuleDef UI_Module = {
@@ -80,8 +132,8 @@ static PyModuleDef UI_Module = {
     .m_name = "gdee.ui",
     .m_doc = "Example module that creates an extension type.",
     .m_size = -1,
+    .m_methods = methods
 };
-#pragma endregion
 
 PyMODINIT_FUNC
 PyInit_custom(void)
@@ -96,6 +148,7 @@ PyInit_custom(void)
     if (m == NULL)
         return NULL;
 
+    // Add UI type
     Py_INCREF(&UI_PType);
     if (PyModule_AddObject(m, "UI", (PyObject*)&UI_PType) < 0) {
         Py_DECREF(&UI_PType);
