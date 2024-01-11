@@ -18,15 +18,9 @@
 
 #pragma region UI Class
 // As for a python UI object, it only really contains the methods for rendering. It doesn't have any inherent data.
-typedef struct {
-    PyObject_HEAD // No semicolon after this, it's a macro!
-    int number_for_testing_purposes;
-        /* Type-specific fields go here. */
-} UI_Object;
-
 
 // Deallocation method
-static void UI_Dealloc(UI_Object* self) {
+static void UI_Dealloc(UIModule::UI_Object* self) {
     // XDecRef any pyobjects being used in the struct
     Py_XDECREF(self->number_for_testing_purposes);
     Py_TYPE(self)->tp_free((PyObject*)self); // Free self
@@ -34,8 +28,8 @@ static void UI_Dealloc(UI_Object* self) {
 
 // New method
 static PyObject* UI_New(PyTypeObject* type, PyObject* args, PyObject* kwds) {
-    UI_Object* self;
-    self = (UI_Object*)type->tp_alloc(type, 0);
+    UIModule::UI_Object* self;
+    self = (UIModule::UI_Object*)type->tp_alloc(type, 0);
 
     if (self != NULL) {
         // Handle initalization of members here
@@ -46,7 +40,7 @@ static PyObject* UI_New(PyTypeObject* type, PyObject* args, PyObject* kwds) {
 }
 
 // Init method
-static int UI_Init(UI_Object* self, PyObject* args, PyObject* kwds){
+static int UI_Init(UIModule::UI_Object* self, PyObject* args, PyObject* kwds){
     static char* kwlist[] = {(char*)"number_for_testing_purposes", NULL};
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "|OOi", kwlist,
@@ -58,23 +52,33 @@ static int UI_Init(UI_Object* self, PyObject* args, PyObject* kwds){
 // define members
 // NOTE: things get updated. Docs are out of date!
 static PyMemberDef UI_members[] = {
-    {"number", T_INT, offsetof(UI_Object, number_for_testing_purposes), 0, "custom number"}, 
+    {"number", T_INT, offsetof(UIModule::UI_Object, number_for_testing_purposes), 0, "custom number"},
     {NULL}  /* Sentinel */
 };
 
 // define methods
 // these methods should ultimately get defined in the python code itself
-static PyObject* UI_preRender(UI_Object* self, PyObject* Py_UNUSED(ignored)) {
+static PyObject* UI_preRender(UIModule::UI_Object* self, PyObject* Py_UNUSED(ignored)) {
 
 }
 
-static PyObject* UI_render(UI_Object* self, PyObject* Py_UNUSED(ignored)) {
+static PyObject* UI_render(UIModule::UI_Object* self, PyObject* Py_UNUSED(ignored)) {
 
 }
 
-static PyObject* UI_postRender(UI_Object* self, PyObject* Py_UNUSED(ignored)) {
+static PyObject* UI_postRender(UIModule::UI_Object* self, PyObject* Py_UNUSED(ignored)) {
 
 }
+
+void UIModule::preRender(UIModule::UI_Object* frame) {
+    UI_preRender(frame, nullptr);
+};
+void UIModule::render(UIModule::UI_Object* frame) {
+    UI_render(frame, nullptr);
+};
+void UIModule::postRender(UIModule::UI_Object* frame) {
+    UI_postRender(frame, nullptr);
+};
 
 // Get methods
 static PyMethodDef UI_methods[] = {
@@ -95,7 +99,7 @@ static PyMethodDef UI_methods[] = {
 static PyTypeObject UI_PType = {
     .ob_base = PyVarObject_HEAD_INIT(NULL, 0) // Manditory initializer
     .tp_name = "gdee.ui.UI", // The name of the type (TODO: manage later)
-    .tp_basicsize = sizeof(UI_Object),
+    .tp_basicsize = sizeof(UIModule::UI_Object),
     .tp_itemsize = 0, // Size is so that python knows how much space to allocate. Itemsize is for variable-sized objects
     .tp_dealloc = (destructor)UI_Dealloc,
     .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE, // Default flag is manditory, basetype flag means ???

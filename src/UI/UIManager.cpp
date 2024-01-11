@@ -2,6 +2,8 @@
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 
+#include <algorithm>
+
 void UIManager::Init(GLFWwindow* window, const char* glsl_version) {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -13,6 +15,16 @@ void UIManager::Init(GLFWwindow* window, const char* glsl_version) {
 	ImGui::StyleColorsDark();
 }
 
+// Register new frame
+void UIManager::RegisterFrame(UIModule::UI_Object& frame) {
+	allFrames.push_back(frame);
+}
+
+// Unegister new frame
+void UIManager::UnegisterFrame(UIModule::UI_Object& frame) {
+	// TODO: remove!
+}
+
 void UIManager::NewFrame() {
 	// feed inputs to dear imgui, start new frame
 	ImGui_ImplOpenGL3_NewFrame();
@@ -20,13 +32,18 @@ void UIManager::NewFrame() {
 	ImGui::NewFrame();
 
 	// Pre-render here
+	for (UIModule::UI_Object& frame : allFrames) {
+		UIModule::preRender(&frame);
+	}
 }
 
 void UIManager::Update() {
 	// Update toolbar
 
 	// Update all UIs
-	// Do this by calling an update() function from each main
+	for (UIModule::UI_Object& frame : allFrames) {
+		UIModule::render(&frame);
+	}
 
 }
 
@@ -36,6 +53,9 @@ void UIManager::Render() {
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 	// Post-render here
+	for (UIModule::UI_Object& frame : allFrames) {
+		UIModule::postRender(&frame);
+	}
 }
 
 void UIManager::Shutdown() {
