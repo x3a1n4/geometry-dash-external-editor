@@ -16,8 +16,8 @@ set(SOURCES
     Python/addon_manager.cpp
     Python/addon_manager.h
 
-    Python/Module/gdee.cpp
-    Python/Module/gdee.h
+    Python/API/gdee.cpp
+    Python/API/gdee.h
 )
 
 add_executable(gdee ${SOURCES})

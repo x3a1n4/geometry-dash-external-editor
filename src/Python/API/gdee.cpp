@@ -1,6 +1,6 @@
 #include "gdee.h"
 
-namespace gdee::python::module{
+namespace gdee::python::api{
 
 // note: static keyword outside of a class means that it's only visible within the file
 
