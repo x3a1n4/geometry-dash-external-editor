@@ -54,7 +54,7 @@ int UIManager::Init(){
 
 int UIManager::Loop(){
 	
-	MainWindow main_window; // TODO: should this be moved?
+	MainWindow main_window; // NOTE: should this be moved?
 	main_window.Init(window, glsl_version);
 
 	while (!glfwWindowShouldClose(window)) {
