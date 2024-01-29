@@ -33,10 +33,7 @@ Addon::Addon(std::string module){
 }
 
 Addon::~Addon(){
-    // TODO: fix memory leakage
-}
-
-void Addon::Free(){
+    // fix memory leakage
     Py_XDECREF(py_register_function);
     Py_XDECREF(py_unregister_function); // make sure it exists!
 
@@ -45,7 +42,7 @@ void Addon::Free(){
     Py_XDECREF(py_module);
 }
 
-// Simply equate addons based on file path name
+// Simply equate addons based on module name
 bool Addon::operator==(const Addon &a){
     return python_module == a.python_module;
 }
