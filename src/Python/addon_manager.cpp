@@ -7,7 +7,7 @@
 
 namespace gdee::python{
 
-std::vector<Addon> AddonManager::loaded_addons; // Why do I need to put this here?
+std::vector<Addon*> AddonManager::loaded_addons; // Why do I need to put this here?
 
 namespace fs = std::filesystem;
 
@@ -51,7 +51,7 @@ void AddonManager::LoadAllAddons(){
                 // Get the module name
                 std::string module_name = "Addons." + addonFolder.path().filename().string() + ".main";
 
-                Addon addon = Addon(module_name);
+                Addon *addon = new Addon(module_name);
                 
                 loaded_addons.push_back(addon);
                 // addon gets freed here, somehow
@@ -60,28 +60,28 @@ void AddonManager::LoadAllAddons(){
     }
 }
 
-void AddonManager::RegisterAddon(Addon addon){
+void AddonManager::RegisterAddon(Addon *addon){
     // Call register function
-    if(!addon.is_registered){
-        addon.Register();
+    if(!addon->is_registered){
+        addon->Register();
     }
 }
 
-void AddonManager::UnregisterAddon(Addon addon){
+void AddonManager::UnregisterAddon(Addon *addon){
     // Call unregister function
-    if(addon.is_registered){
-        addon.Unregister();
+    if(addon->is_registered){
+        addon->Unregister();
     }
 }
 
 void AddonManager::RegisterAllAddons(){
-    for(Addon addon : loaded_addons){
+    for(Addon* addon : loaded_addons){
         RegisterAddon(addon);
     }
 }
 
 void AddonManager::UnregisterAllAddons(){
-    for(Addon addon : loaded_addons){
+    for(Addon* addon : loaded_addons){
         UnregisterAddon(addon);
     }
 }

@@ -30,10 +30,10 @@ private:
     static void RegisterAllAddons();
     static void UnregisterAllAddons();
 
-    static void RegisterAddon(Addon addon);
-    static void UnregisterAddon(Addon addon);
+    static void RegisterAddon(Addon *addon);
+    static void UnregisterAddon(Addon *addon);
 
-    static std::vector<Addon> loaded_addons;
+    static std::vector<Addon*> loaded_addons;
 };
 
 }
