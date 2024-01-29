@@ -35,7 +35,7 @@ void AddonManager::LoadAllAddons(){
     std::cout << "Loading addons from folder " << GetAddonDirectoryPath() << std::endl;
 
     // Loop through all folders, find main.py file in each
-    // FIXME: verify addon folder exists
+    // FIXME: verify addon folder exists, generally clean up
     for (const auto& addonFolder : fs::directory_iterator(GetAddonDirectoryPath())) {
         if (addonFolder.is_directory()) {
             // Process subfolders
@@ -47,6 +47,7 @@ void AddonManager::LoadAllAddons(){
             if (fs::exists(mainPyPath)) {
                 // if so, load it!
                 std::cout << "Loading addon at " << mainPyPath << std::endl;
+
                 Addon addon = Addon(mainPyPath);
                 
                 loaded_addons.push_back(addon);

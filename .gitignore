@@ -1,2 +1,17 @@
 out/*
+
+!out/build/
+out/build/*
+
+!out/build/x64-debug/
+out/build/x64-debug/*
+
+!out/build/x64-debug/src/
+out/build/x64-debug/src/*
+
+!out/build/x64-debug/src/Debug/
+out/build/x64-debug/src/Debug/*
+
+!out/build/x64-debug/src/Debug/Addons
+
 .vscode/*
