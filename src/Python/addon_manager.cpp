@@ -48,12 +48,13 @@ void AddonManager::LoadAllAddons(){
                 // if so, load it!
                 std::cout << "Loading addon at " << mainPyPath << std::endl;
 
-                // The module name is just [the folder name] + "main"
-                std::string module_name = addonFolder.path().filename().string() + ".main";
+                // Get the module name
+                std::string module_name = "Addons." + addonFolder.path().filename().string() + ".main";
 
                 Addon addon = Addon(module_name);
                 
                 loaded_addons.push_back(addon);
+                // addon gets freed here, somehow
             }
         }
     }

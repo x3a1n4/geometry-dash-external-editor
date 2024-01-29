@@ -17,6 +17,9 @@ public:
     int Register();
     int Unregister();
 
+    // Free up associated memory, make sure to call before deleting!
+    void Free();
+
     // Save whether addon is currently registered
     bool is_registered = false;
 

@@ -14,4 +14,6 @@ out/build/x64-debug/src/Debug/*
 
 !out/build/x64-debug/src/Debug/Addons
 
+out/build/x64-debug/src/Debug/Addons/*/__pycache__/
+
 .vscode/*
