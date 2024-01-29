@@ -8,7 +8,7 @@ namespace gdee::python{
 
 class Addon{
 public:
-    Addon(std::string file_path);
+    Addon(std::string module);
     ~Addon();
 
     bool operator==(const Addon &a);
@@ -21,7 +21,7 @@ public:
     bool is_registered = false;
 
     // Save original file path of addon
-    std::string python_file_path;
+    std::string python_module;
 private:
     // store internal python pointers
     // module: contains base file

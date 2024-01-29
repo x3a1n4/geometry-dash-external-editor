@@ -5,10 +5,10 @@
 // generic addon class
 namespace gdee::python{
 
-Addon::Addon(std::string file_path){
-    python_file_path = file_path;
+Addon::Addon(std::string module){
+    python_module = module;
     // find all relevant addon properties, and save them to class 
-    PyObject *py_name = PyUnicode_DecodeFSDefault(file_path.c_str());
+    PyObject *py_name = PyUnicode_DecodeFSDefault(module.c_str());
 
     // FIXME: Not getting py_module from name here
     py_module = PyImport_Import(py_name);
@@ -33,7 +33,7 @@ Addon::~Addon(){
 
 // Simply equate addons based on file path name
 bool Addon::operator==(const Addon &a){
-    return python_file_path == a.python_file_path;
+    return python_module == a.python_module;
 }
 
 // Call register() function on addon's python file
