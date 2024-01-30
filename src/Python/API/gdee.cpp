@@ -17,9 +17,22 @@ static PyObject* gdee_numargs(PyObject *self, PyObject *args){
 
 // code from https://stackoverflow.com/questions/5356773/python-get-string-representation-of-pyobject
 static PyObject* gdee_print(PyObject *self, PyObject *args){
-    PyObject_Print(args, stdout, Py_PRINT_RAW);
-    //std::cout << args << std::endl;
-    return NULL;
+    // parse args
+    const char *message;
+    PyArg_ParseTuple(args, "s", &message);
+
+    /*
+    PyObject* strObj = PyObject_Str(args);
+    const char *bytes = PyUnicode_AsUTF8(strObj);
+    */
+
+    std::cout << message << std::endl;
+
+    //Py_XDECREF(strObj);
+
+    // return Py_None value (no return value in python)
+    Py_INCREF(Py_None);
+    return Py_None;
 }
 
 static PyMethodDef GdeeMethods[] = {
