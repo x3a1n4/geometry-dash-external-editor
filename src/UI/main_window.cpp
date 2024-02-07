@@ -1,9 +1,14 @@
-#include "ui.h"
-#include "GLFW/glfw3.h"
+#include "main_window.h"
 
-class CustomImGui : public UseImGui {
-public:
-	virtual void Update() override {
+#include "glad/glad.h"
+
+namespace gdee::ui{
+
+void change_clear_color(float r, float g, float b) {
+    glClearColor(r, g, b, 1.00f);
+}
+
+void MainWindow::Update(){
 
 		bool show_demo_window = true;
 		bool show_another_window = false;
@@ -16,7 +21,7 @@ public:
 		static float f = 0.0f;
 		static int counter = 0;
 
-		ImGui::Begin("CustomImGui Hello, world!");              // Create a window called "Hello, world!" and append into it.
+		ImGui::Begin("Hello, world!");              // Create a window called "Hello, world!" and append into it.
 
 		ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
 
@@ -41,9 +46,4 @@ public:
 
 	}
 
-private:
-	float clear_color[3] = { .0f, .0f, .0f };
-	void change_clear_color(float r, float g, float b) {
-		glClearColor(r, g, b, 1.00f);
-	}
-};
+}

@@ -1,10 +1,11 @@
-﻿#pragma once
+#pragma once
 
-#include "ui.h"
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 
-class UseImGui {
+namespace gdee::ui{
+
+class BaseWindow {
 public:
 	void Init(GLFWwindow* window, const char* glsl_version);
 	void NewFrame();
@@ -12,3 +13,5 @@ public:
 	void Render();
 	void Shutdown();
 };
+
+}
