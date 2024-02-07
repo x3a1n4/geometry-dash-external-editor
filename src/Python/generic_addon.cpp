@@ -15,7 +15,7 @@ Addon::Addon(std::string module){
 
     if (py_module != NULL) {
         // get functions, note if the function does not exist then it crashes!
-        // TODO: add proper error handling, logging
+        // TODO (LOW): add proper error handling, logging
         if(PyObject_HasAttrString(py_module, "register")){
             py_register_function = PyObject_GetAttrString(py_module, "register");
         }else{
@@ -49,7 +49,6 @@ bool Addon::operator==(const Addon &a){
 
 // Call register() function on addon's python file
 int Addon::Register(){
-    // FIXME: Read Access violation
     if (py_register_function && PyCallable_Check(py_register_function)) {
         // Call function, more error handling likely required
         PyObject_CallObject(py_register_function, nullptr);

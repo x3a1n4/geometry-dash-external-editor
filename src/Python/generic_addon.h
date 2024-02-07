@@ -1,7 +1,7 @@
 #pragma once
 
 #define PY_SSIZE_T_CLEAN
-#include <Python.h> // FIXME: you don't need to include the full path, just use Python.h! MSVC can't hurt you here.
+#include <Python.h>
 #include <string>
 
 namespace gdee::python{

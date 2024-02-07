@@ -18,6 +18,8 @@ set(SOURCES
 
     Python/API/gdee.cpp
     Python/API/gdee.h
+    Python/API/ui.cpp
+    Python/API/ui.h
 )
 
 add_executable(gdee ${SOURCES})

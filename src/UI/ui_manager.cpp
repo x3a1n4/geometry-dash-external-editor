@@ -69,7 +69,9 @@ int UIManager::Loop(){
 		main_window.Update();
 		main_window.Render();
 
-		// TODO: update all windows generated with python
+		// TODO (HIGH): update all windows generated with python
+
+		// TODO (HIGH): add menu bar to GL window: https://github.com/ocornut/imgui/issues/6307 (not worried about the issue, it has nice code)
 
 		// Render multi-viewport windows (popped-out windows)
 		// NOTE: original code has an if statement here that checks the config flags. Likely not needed, but noted to be safe
@@ -80,10 +82,8 @@ int UIManager::Loop(){
 
 		// Swap the buffers, rendering the window to the screen
 		glfwSwapBuffers(window);
-
 	}
 	
-
 	main_window.Shutdown();
 	
 	return 0;

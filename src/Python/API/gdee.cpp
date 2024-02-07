@@ -1,7 +1,6 @@
 #include "gdee.h"
 
 #include <iostream>
-#include <cstdio>
 
 namespace gdee::python::api{
 
@@ -39,7 +38,7 @@ static PyMethodDef GdeeMethods[] = {
     {"numargs", gdee_numargs, METH_VARARGS,
      "Return the number of arguments received by the process. (test method)"},
     {"print", gdee_print, METH_VARARGS,
-     "Print to the main console"}, //TODO: implement print function!
+     "Print to the main console"}, 
     {NULL, NULL, 0, NULL}
 };
 
