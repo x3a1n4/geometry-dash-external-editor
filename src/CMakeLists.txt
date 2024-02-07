@@ -41,3 +41,9 @@ target_link_libraries(gdee PRIVATE imgui::imgui)
 
 find_package(Python3 COMPONENTS Development REQUIRED)
 target_link_libraries(gdee PRIVATE Python3::Python)
+
+# TODO: 
+# Figure out what this means
+find_package(pybind11 CONFIG REQUIRED)
+python3_add_library(_core MODULE src/main.cpp WITH_SOABI) 
+target_link_libraries(_core PRIVATE pybind11::headers)
